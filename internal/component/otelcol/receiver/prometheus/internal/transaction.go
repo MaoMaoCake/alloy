@@ -174,6 +174,7 @@ func (t *transaction) getOrCreateMetricFamily(scope scopeID, mn string) *metricF
 	return curMf
 }
 
+// AppendExemplar implements storage.Appender.
 func (t *transaction) AppendExemplar(_ storage.SeriesRef, l labels.Labels, e exemplar.Exemplar) (storage.SeriesRef, error) {
 	select {
 	case <-t.ctx.Done():
@@ -204,7 +205,14 @@ func (t *transaction) AppendExemplar(_ storage.SeriesRef, l labels.Labels, e exe
 	return 0, nil
 }
 
+// AppendHistogram implements storage.Appender.
 func (t *transaction) AppendHistogram(_ storage.SeriesRef, _ labels.Labels, _ int64, _ *histogram.Histogram, _ *histogram.FloatHistogram) (storage.SeriesRef, error) {
+	//TODO: implement this func
+	return 0, nil
+}
+
+// AppendCTZeroSample implements storage.Appender.
+func (t *transaction) AppendCTZeroSample(_ storage.SeriesRef, _ labels.Labels, _ int64, _ int64) (storage.SeriesRef, error) {
 	//TODO: implement this func
 	return 0, nil
 }

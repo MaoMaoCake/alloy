@@ -22,12 +22,13 @@ import (
 	"time"
 
 	"github.com/go-kit/log"
-	"github.com/grafana/alloy/internal/alloy/logging/level"
 	consul "github.com/hashicorp/consul/api"
 	conntrack "github.com/mwitkow/go-conntrack"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/config"
 	"github.com/prometheus/common/model"
+
+	"github.com/grafana/alloy/internal/alloy/logging/level"
 
 	"github.com/prometheus/prometheus/discovery"
 	"github.com/prometheus/prometheus/discovery/targetgroup"
@@ -116,6 +117,11 @@ type SDConfig struct {
 	ServiceTags []string `yaml:"tags,omitempty"`
 
 	TLSConfig config.TLSConfig `yaml:"tls_config,omitempty"`
+}
+
+// NewDiscovererMetrics implements discovery.DiscovererConfig.
+func (c *SDConfig) NewDiscovererMetrics(reg prometheus.Registerer, rmi discovery.RefreshMetricsInstantiator) discovery.DiscovererMetrics {
+	return newDiscovererMetrics(reg, rmi)
 }
 
 // Name returns the name of the Config.
