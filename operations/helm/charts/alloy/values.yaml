@@ -304,7 +304,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   labels: {}
   path: /
-  faroPort: 12347
+  faroPort: 12345
 
   # pathType is only for k8s >= 1.1=
   pathType: Prefix
